@@ -80,46 +80,14 @@ var Engine = (function(global) {
      */
     function update(dt) {
         updateEntities(dt);
-        checkCollisions();
+ //     player.checkCollisions();
+//		player.checkGems();
+		
     }
 	
-	function checkCollisions() {
-		var playerCollision = false;
-		allEnemies.forEach(function(enemy){
-			if (playerCollision == true)
-				return;
-			
-			if (((enemy.x + enemy.getWidth()) > player.x) &&
-				((enemy.x + enemy.getWidth()) < (player.x + player.getWidth()))){ 
-				if(((enemy.y + enemy.getHeight()) <= (player.y + player.getHeight())) && 
-					((enemy.y + enemy.getHeight()) > player.y)){
-					playerCollision = true;
-				
-				}
-				else if((enemy.y >= player.y) && (enemy.y < (player.y + player.getHeight()))){
-					playerCollision = true;
-					
-				}
-			}
-			else if ((enemy.x > player.x) && (enemy.x < (player.x + player.getWidth()))){
-				if(((enemy.y + enemy.getHeight()) <= (player.y + player.getHeight())) && 
-					((enemy.y + enemy.getHeight()) > player.y)){
-					playerCollision = true;
-					
-				}
-				else if((enemy.y >= player.y) && (enemy.y < (player.y + player.getHeight()))){
-					playerCollision = true;
-					
-				}
-			}
-			
-		});
-		if (playerCollision) {
-				player.deduct();
-				init();
-		}
-	}
+	
 
+	
     /* This is called by the update function  and loops through all of the
      * objects within your allEnemies array as defined in app.js and calls
      * their update() methods. It will then call the update function for your
@@ -132,6 +100,9 @@ var Engine = (function(global) {
             enemy.update(dt);
         });
         player.update();
+		allGems.forEach(function(gem) {
+            gem.update();
+        });
     }
 
     /* This function initially draws the "game level", it will then call
@@ -152,6 +123,7 @@ var Engine = (function(global) {
                 'images/grass-block.png',   // Row 1 of 2 of grass
                 'images/grass-block.png'    // Row 2 of 2 of grass
             ],
+			
             numRows = 6,
             numCols = 5,
             row, col;
@@ -172,11 +144,38 @@ var Engine = (function(global) {
                 ctx.drawImage(Resources.get(rowImages[row]), col * 101, row * 83);
             }
         }
+		
 		ctx.fill();
 		ctx.fillStyle = "black";
-		ctx.font = "bold 15pt sans-serif";
-//		ctx.textAlign = "top";
-		ctx.fillText("Scores: " + player.score, 30, 83);
+		ctx.font = "bold 16pt sans-serif";
+		ctx.fillText("SCORES: " + player.score, 30, 83);
+		if (player.msg != "") {
+			ctx.fillStyle = "red";
+			ctx.font = "bold 40pt sans-serif";
+			ctx.fillText(player.msg, 400, 480);
+		}
+		
+		var charImages = [
+			'images/char-boy.png',   
+            'images/char-cat-girl.png',   
+            'images/char-horn-girl.png',   
+            'images/char-pink-girl.png',   
+            'images/char-princess-girl.png'
+        ];
+		
+		// If game has not started yet, show all the characters for player to choose
+		if (player.isStarted() == false && player.state == "") {
+			for (col = 0; col < 5; col ++) {
+				ctx.drawImage(Resources.get(charImages[col]), col * 101, 73 + (numRows-2)*83);
+			}
+			
+			ctx.fillStyle = "green";
+			ctx.font = "bold 18pt sans-serif";
+			ctx.fillText("Please Enter 1 to 5 to Select a Character", 30, 249);
+			
+		}
+		
+		
 		
 
         renderEntities();
@@ -195,6 +194,10 @@ var Engine = (function(global) {
         });
 
         player.render();
+		
+		allGems.forEach(function(gem) {
+			gem.render();
+		});
     }
 
     /* This function does nothing but it could have been a good place to
@@ -203,7 +206,7 @@ var Engine = (function(global) {
      */
     function reset() {
         // reset player
-		player.reset();
+//		player.reset();
     }
 
     /* Go ahead and load all of the images we know we're going to need to
@@ -219,7 +222,13 @@ var Engine = (function(global) {
 		'images/char-cat-girl.png',
 		'images/char-horn-girl.png',
 		'images/char-pink-girl.png',
-		'images/char-princess-girl.png'
+		'images/char-princess-girl.png',
+		'images/Gem Blue.png',
+		'images/Gem Green.png',
+		'images/Gem Orange.png',
+		'images/Heart.png',
+		'images/Star.png'
+		
     ]);
     Resources.onReady(init);
 
