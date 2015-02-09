@@ -1,9 +1,9 @@
 // GEM our player can get to win more points
 var Gem = function(gemId) {
-    this.x = Math.random() * 4 * 101;  // x position - a random number between 0 and 4  multiplied by width of image
+	this.x = Math.random() * 4 * 101;  // x position - a random number between 0 and 4  multiplied by width of image
 	this.y = 63 + Math.floor((Math.random() * 3)) * 83; // y position - a random number between 1 and 5 multiplied by height of image
 	
-    this.gemId = gemId;
+	this.gemId = gemId;
 	this.created = Date.now();  // the time that this gem is created
             
 	this.charImages ={
