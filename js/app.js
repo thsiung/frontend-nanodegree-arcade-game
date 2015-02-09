@@ -102,8 +102,8 @@ Player.prototype.update = function() {
 	
     this.checkCollisions(); // Check if player collides with any enemies
 
-	// The player loses 20 points when colliding with the enemy
-	if (this.playerCollision) {
+    // The player loses 20 points when colliding with the enemy
+    if (this.playerCollision) {
         this.score --;
         this.pointsAdded --;
         this.msg = "-20";
@@ -114,7 +114,7 @@ Player.prototype.update = function() {
         }
     }
 	
-	// The player gains 50 points upon reaching the water
+    // The player gains 50 points upon reaching the water
     if (this.y < 73) {// in water
         this.score ++;
         this.pointsAdded ++;
@@ -164,8 +164,8 @@ Player.prototype.handleInput = function(keyCode) {
             if (this.x < 0)
                 this.x += canvas.width;
             this.x %= canvas.width;
-		}
-		else if (keyCode == 'up') {
+        }
+        else if (keyCode == 'up') {
             this.y -= 83;
             if (this.y < -10)
                 this.y += 83;
@@ -182,12 +182,12 @@ Player.prototype.handleInput = function(keyCode) {
             this.x %= canvas.width;
         }
     }
-	else if (this.start == true && this.state != "") {
+    else if (this.start == true && this.state != "") {
         if (keyCode == 'Space')
             this.resetGame();
 	}
 	else { // Game has not started - player is selecting a character
-		if (keyCode == '1' || keyCode == '2' || keyCode == '3' ||
+        if (keyCode == '1' || keyCode == '2' || keyCode == '3' ||
             keyCode == '4' || keyCode == '5') {
             this.playerId = keyCode;
             this.start = true;
@@ -199,8 +199,8 @@ Player.prototype.handleInput = function(keyCode) {
 }
 
 Player.prototype.checkCollisions = function() {
-	// check if player collide with any enemies
-	// if true, then set playerCollision = true
+// check if player collide with any enemies
+// if true, then set playerCollision = true
     var counter;
     var proximity = 50;
 
