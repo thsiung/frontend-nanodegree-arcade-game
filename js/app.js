@@ -23,17 +23,16 @@ Enemy.prototype.update = function(dt) {
 
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function() {
-	if (player.isStarted() == true)
-	    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-	
+    if (player.isStarted() == true)
+        ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 }
 
 Enemy.prototype.getHeight = function() {
-	return 65;
+    return 65;
 }
 
 Enemy.prototype.getWidth = function() {
-	return 76;
+    return 76;
 }
 
 
@@ -50,7 +49,7 @@ var Player = function () {
     this.msg = "";    // record the number of points that the player gains or loses for display
     this.state = "";  // has the player won or lost, otherwise set to ""
 
-	this.charImages ={
+    this.charImages ={
         "1": "images/char-boy.png",
         "2": "images/char-cat-girl.png",
         "3": "images/char-horn-girl.png",
