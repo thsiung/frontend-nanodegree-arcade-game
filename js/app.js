@@ -24,21 +24,21 @@ Enemy.prototype.update = function(dt) {
         }
     }
 	this.render();
-}
+};
 
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function() {
     if (player.isStarted() == true)
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-}
+};
 
 Enemy.prototype.getHeight = function() {
     return 65;
-}
+};
 
 Enemy.prototype.getWidth = function() {
     return 76;
-}
+};
 
 // This Player class contains an update(), render() and
 // a handleInput() method.
@@ -65,17 +65,17 @@ var Player = function () {
 // Return player status
 Player.prototype.isStarted = function() {
     return this.start;
-}
+};
 
 // Return player height
 Player.prototype.getHeight = function() {
     return 75;
-}
+};
 
 // Return player width
 Player.prototype.getWidth = function() {
     return 76;
-}
+};
 
 // Reset player position, state, and message, but not the game
 Player.prototype.reset = function() {
@@ -84,7 +84,7 @@ Player.prototype.reset = function() {
     this.playerCollision = false;
     this.msg = "";
     this.state = "";
-}
+};
 
 // Reset the game
 Player.prototype.resetGame = function() {
@@ -93,7 +93,7 @@ Player.prototype.resetGame = function() {
     this.score = 0;
     this.start = false;
     this.playerId = -1;
-}
+};
 
 // Update internal states - check to see if player
 // has collided with the enemies, caught any gems, won or lost the game
@@ -135,7 +135,7 @@ Player.prototype.update = function() {
     }
     else 
         this.state = '';
-}
+};
 
 // Render the player image
 Player.prototype.render = function() {
@@ -146,10 +146,9 @@ Player.prototype.render = function() {
             ctx.font = 'bold 20pt sans-serif';
             ctx.fillText('GAME OVER - You ' + player.state + '!!!', 30, 249);
             ctx.fillText('Please Enter Space Key To Restart' + '!!!', 30, 310);
-//			this.resetGame();
         }
     }
-}
+};
 
 // Process user key inputs
 // Space key is to restart the game
@@ -188,7 +187,7 @@ Player.prototype.handleInput = function(keyCode) {
         }
     }
     this.render();
-}
+};
 
 Player.prototype.checkCollisions = function() {
 // check if player collide with any enemies
@@ -205,7 +204,7 @@ Player.prototype.checkCollisions = function() {
             this.playerCollision = true;
         }
     }
-}
+};
 	
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
@@ -241,4 +240,5 @@ setInterval(function() {
                      allEnemies.push(new Enemy(s));
 	            }
             }, 1000);
+
 var player = new Player();

@@ -15,7 +15,7 @@ var Gem = function(gemId) {
 
     this.cycle = this.charImages[this.gemId].cycletime;
     this.sprite = this.charImages[this.gemId].image;
-}
+};
 
 // Update the gem's position
 Gem.prototype.update = function() {
@@ -76,32 +76,32 @@ Gem.prototype.update = function() {
         }
     }
     this.render();
-}
+};
 
 // Hide the gem
 Gem.prototype.reset = function() {
     this.created = Date.now();
     this.x = -300;
     this.y = -300;
-}
+};
 
 // Draw the gem on the screen, required method for game
 Gem.prototype.render = function() {
     if (player.isStarted() == true && player.state == "") {
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y, 50.5, 41.5);
     }
-}
+};
 
 // return gem image height
 Gem.prototype.getHeight = function() {
 //	return Resources.get(this.sprite).height;
     return 83;
-}
+};
 
 // return gem image width
 Gem.prototype.getWidth = function() {
     return Resources.get(this.sprite).width;
-}
+};
 
 // GEM list
 var allGems = [];
