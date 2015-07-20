@@ -52,6 +52,7 @@ var Player = function () {
     this.playerId = -1;   // the user has to choose a player ID between 1 to 5
     this.msg = "";    // record the number of points that the player gains or loses for display
     this.state = "";  // has the player won or lost, otherwise set to ""
+	this.updating = false; // Is the score being updated right now?
 
     this.charImages = {
         '1': 'images/char-boy.png',
@@ -84,6 +85,7 @@ Player.prototype.reset = function() {
     this.playerCollision = false;
     this.msg = "";
     this.state = "";
+	this.updating = false;
 };
 
 // Reset the game
@@ -106,6 +108,7 @@ Player.prototype.update = function() {
     // The player loses 20 points when colliding with the enemy
     if (this.playerCollision) {
         this.score --;
+		this.updating = true;
         this.pointsAdded --;
         this.msg = "-20";
 	
@@ -118,6 +121,7 @@ Player.prototype.update = function() {
     // The player gains 50 points upon reaching the water
     if (this.y < 73) {// in water
         this.score ++;
+		this.updating = true;
         this.pointsAdded ++;
         this.msg = '+50';
 
@@ -154,37 +158,33 @@ Player.prototype.render = function() {
 // Space key is to restart the game
 // number 1 to 5 is to choose a character
 //  left, right, up, down keys are to control player direction
-Player.prototype.handleInput = function(keyCode) {
+Player.prototype.handleInput = function(keyCode) { 
+    if(this.updating == true)
+        return;
+
     if(this.start == true && this.state == "") {
         if (keyCode == 'left') {
-			if((this.x - 101) >= 0)
-            this.x -= 101;
+            this.x = (this.x >= 101) ? (this.x - 101) : this.x;
         }
         else if (keyCode == 'up') {
             this.y -= 83;
-            if (this.y < -10)
-                this.y += 83;
+            this.y = (this.y < -10) ? (this.y + 83) : this.y;
             this.y %= 488;
         }
         else if (keyCode == 'down') {
-			if ((this.y + 83) < 488)
-                this.y += 83;
+            this.y = ((this.y + 83) < 488) ? (this.y + 83) : this.y; 
         }
         else if (keyCode == 'right') {
-			if ((this.x + 101) < canvas.width)
-                this.x += 101;
+            this.x = ((this.x + 101) < canvas.width) ? (this.x + 101) : this.x;
         }
     }
-    else if (this.start == true && this.state != "") {
-        if (keyCode == 'Space')
-            this.resetGame();
+	else if (this.start == true && this.state != "" && keyCode == 'Space') {
+        this.resetGame();
     }
-    else { // Game has not started - player is selecting a character
-        if (keyCode == '1' || keyCode == '2' || keyCode == '3' ||
-            keyCode == '4' || keyCode == '5') {
-            this.playerId = keyCode;
-            this.start = true;
-        }
+    else if (this.start == false &&  // Game has not started - player is selecting a character
+            (keyCode == '1' || keyCode == '2' || keyCode == '3' || keyCode == '4' || keyCode == '5')) {
+        this.playerId = keyCode;
+        this.start = true;
     }
     this.render();
 };
@@ -234,8 +234,7 @@ setInterval(function() {
                     return;
 	            var r = Math.floor((Math.random() * 3)); // random
 	            var s = Math.floor((Math.random() * 100)); // starting speed
-                if (s < 5) 
-                    s += 10;
+ 				s = (s < 5) ? (s + 10) : s;
 	            for (var i = 0; i < r; i ++, s += 50){
                      allEnemies.push(new Enemy(s));
 	            }

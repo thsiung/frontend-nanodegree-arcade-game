@@ -21,28 +21,19 @@ var Gem = function(gemId) {
 Gem.prototype.update = function() {
     // check if gem has been caught by the player, if yes, increment player's score by 5
     function xWithinRange(gem) {
-        if (player.x >= gem.x) {
-            if ((player.x - gem.x) < 51.5)
-                return true;
-            return false;
-        }
-        else {
-            if ((gem.x - player.x) < 101)
-                return true;
-            return false;
-        }
+		if ((player.x >= gem.x) && ((player.x - gem.x) < 51.5)) 
+            return true;
+        else if ((player.x < gem.x) && ((gem.x - player.x) < 101))
+            return true;
+        return false;
     }
     function yWithinRange(gem) {
-        if (player.y >= gem.y) {
-            if ((player.y - gem.y) < 41.5)
-                return true;
-            return false;
-        }
-        else {
-            if ((gem.y - player.y) < 112)
-                return true;
-            return false;
-        }
+        if ((player.y >= gem.y) && ((player.y - gem.y) < 41.5))
+            return true;
+        else if ((player.y < gem.y) &&(gem.y - player.y) < 112)
+            return true;
+        
+        return false;
     }
     if (xWithinRange(this) && yWithinRange(this)) {
         player.score += 5;
@@ -65,15 +56,10 @@ Gem.prototype.update = function() {
         else {
             if (this.x == -300 && this.y == -300)
                 return;
-            if (oldX == -200)
-                this.x = Math.random() * 4 * 101;
-            else
-                this.x = oldX;
-            if (oldY == -200)
-                this.y = 101 + Math.floor((Math.random() * 3)) * 83;
-            else 
-                this.y = oldY;
-        }
+			
+            this.x = (oldX == -200) ? (Math.random() * 4 * 101) : oldX;
+            this.y = (oldY == -200) ? (101 + Math.floor((Math.random() * 3)) * 83) : oldY;
+        } 
     }
     this.render();
 };
