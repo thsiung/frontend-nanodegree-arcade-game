@@ -52,7 +52,7 @@ var Player = function () {
     this.playerId = -1;   // the user has to choose a player ID between 1 to 5
     this.msg = "";    // record the number of points that the player gains or loses for display
     this.state = "";  // has the player won or lost, otherwise set to ""
-	this.updating = false; // Is the score being updated right now?
+    this.updating = false; // Is the score being updated right now?
 
     this.charImages = {
         '1': 'images/char-boy.png',
@@ -85,7 +85,7 @@ Player.prototype.reset = function() {
     this.playerCollision = false;
     this.msg = "";
     this.state = "";
-	this.updating = false;
+    this.updating = false;
 };
 
 // Reset the game
@@ -108,7 +108,7 @@ Player.prototype.update = function() {
     // The player loses 20 points when colliding with the enemy
     if (this.playerCollision) {
         this.score --;
-		this.updating = true;
+        this.updating = true;
         this.pointsAdded --;
         this.msg = "-20";
 	
@@ -121,7 +121,7 @@ Player.prototype.update = function() {
     // The player gains 50 points upon reaching the water
     if (this.y < 73) {// in water
         this.score ++;
-		this.updating = true;
+        this.updating = true;
         this.pointsAdded ++;
         this.msg = '+50';
 
